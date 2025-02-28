@@ -13,11 +13,12 @@ class Pessoa {
 // exports.sobrenome = sobrenome
 // exports.falaNome = falaNome
 // exports.Pessoa = Pessoa
-this.qualquerCoisa = 'Eae, bão?';
+// this.qualquerCoisa = 'Eae, bão?';
 
-module.exports = function(x, y) {
-    return x + y
-}
+// module.exports = function multiplicacao(y, x) {
+//     return y * x;
+// };
+
 
 // Ouu posso simplesmente sobrescrever
 
