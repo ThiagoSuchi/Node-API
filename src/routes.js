@@ -7,6 +7,7 @@ const contatoController = require('./controllers/contatoController.js')
 route.get('/', homeController.paginaInicial);
 route.post('/', homeController.trataPost);
 
+// Rota do contato
 route.get('/contato', contatoController.paginaInicial);
 
 module.exports = route;

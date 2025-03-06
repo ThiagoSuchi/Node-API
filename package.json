@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./modulo1/server.js",
+    "start": "nodemon ./src/server2.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
