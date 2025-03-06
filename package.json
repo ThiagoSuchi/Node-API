@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./modulo2/server2.js",
+    "start": "nodemon ./modulo2/server2.js --ignore public --ignore frontend",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
