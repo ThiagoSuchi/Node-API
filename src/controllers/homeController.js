@@ -7,6 +7,10 @@ exports.paginaInicial = (req, res) => {
     `)
 }
 
+exports.paginaSecundaria = (req, res) => {
+    res.render('index');
+}
+
 exports.trataPost = (req, res) => {
     res.send("Ei, você acabou de enviar um formulário.")
 }
