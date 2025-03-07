@@ -12,5 +12,5 @@ exports.paginaSecundaria = (req, res) => {
 }
 
 exports.trataPost = (req, res) => {
-    res.send("Ei, você acabou de enviar um formulário.")
+    res.send(req.body)
 }
