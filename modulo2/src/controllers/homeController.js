@@ -1,3 +1,12 @@
+const HomeModel = require('../models/HomeModel.js')
+
+HomeModel.create({
+    titulo: 'Primeira coleção',
+    descricao: 'Coleção para testes...'
+})
+  .then(dados => console.log(dados))
+  .catch(err => console.log(err));
+
 exports.paginaInicial = (req, res) => {
     res.send(`
         <form action="/" method="POST">
