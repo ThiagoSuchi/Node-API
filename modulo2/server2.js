@@ -13,7 +13,9 @@ mongoose.connect(process.env.CONNECTIONSTRING)
   })
   .catch(err => console.error(err));
 
+// O express-session é um middleware que armazena informações da sessão do usuário no servidor em vez de armazená-las no navegador como cookies.
 const session = require('express-session');
+// O connect-mongo é uma extensão do express-session que permite salvar as sessões no MongoDB em vez de armazená-las na memória do servidor.
 const MongoStore = require('connect-mongo');
 
 const routes = require('./routes.js');
@@ -41,6 +43,7 @@ app.set('views', path.resolve(__dirname, 'src', 'views'));
 // View engine (motor de renderização de templates)
 app.set('view engine', 'ejs');
 
+// Nossos próprios middlewares
 app.use(meuMiddleware);
 app.use(routes);
 
