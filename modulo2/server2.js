@@ -13,13 +13,31 @@ mongoose.connect(process.env.CONNECTIONSTRING)
   })
   .catch(err => console.error(err));
 
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const flash = require('connect-flash');
+
 const routes = require('./routes.js');
 const path = require('path');
 const meuMiddleware = require('./src/middlewares/middleware.js')
 
+//la permite que o Express interprete dados enviados via formulários HTML no formato URL-encoded e os transforme em um objeto JavaScript acessível via req.body.
 app.use(express.urlencoded({ extended: true }));
 
 app.use(express.static(path.resolve(__dirname, 'public')))
+
+const sessionOptions = session({
+  secret: 'Opa este campo só eu sei...',
+  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true
+  }
+});
+app.use(sessionOptions)
+app.use(flash());
 
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 // View engine (motor de renderização de templates)
