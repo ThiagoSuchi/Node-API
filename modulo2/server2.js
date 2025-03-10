@@ -14,8 +14,7 @@ mongoose.connect(process.env.CONNECTIONSTRING)
   .catch(err => console.error(err));
 
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
-const flash = require('connect-flash');
+const MongoStore = require('connect-mongo');
 
 const routes = require('./routes.js');
 const path = require('path');
@@ -28,7 +27,7 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 
 const sessionOptions = session({
   secret: 'Opa este campo só eu sei...',
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  store: new MongoStore({ mongoUrl: 'mongodb://127.0.0.1:27017/thiagohenssuchi' }),
   resave: false,
   saveUninitialized: false,
   cookie: {
@@ -37,7 +36,6 @@ const sessionOptions = session({
   }
 });
 app.use(sessionOptions)
-app.use(flash());
 
 app.set('views', path.resolve(__dirname, 'src', 'views'));
 // View engine (motor de renderização de templates)
