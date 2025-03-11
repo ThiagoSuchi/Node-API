@@ -11,9 +11,18 @@
 <body>
 
     <h1>
-        <%= titulo %><br><!--Este é o modo mais indicado.-->
-        <%- titulo %> <!--Use apenas quando o valor recbido precisa ser html.-->
+        <% if(typeof titulo !== 'undefined') { %>
+            <%= titulo %>
+        <% } else { %>
+            O título não foi enviado
+        <% } %><!--Este é o modo mais indicado.-->
     </h1>
+
+    <h2>
+        <% numeros.forEach(num => { %>
+            <%= num %>
+        <% }) %>
+    </h2>
 
     <form action="/" method="post">
         <label>Cliente</label>

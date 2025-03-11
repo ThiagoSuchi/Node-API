@@ -18,7 +18,7 @@ exports.paginaInicial = (req, res) => {
 
 exports.paginaSecundaria = (req, res) => {
     res.render('index', {
-        titulo: 'Tíulo da <span style="color: red;">página</span>',
+        titulo:  'Tíulo da página',
         numeros: [0, 1, 2, 3, 4, 5, 6, 7]
     });
     return;
