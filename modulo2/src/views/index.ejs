@@ -1,26 +1,26 @@
-<%- include('includes/head') %>
+<%- include('./includes/head') %>
 
-<body>
-    <h1>
-        <% if(typeof titulo !== 'undefined') { %>
-            <%= titulo %>
-        <% } else { %>
-            O título não foi enviado
-        <% } %><!--Este é o modo mais indicado.-->
-    </h1>
+    <body>
+        <h1>
+            <% if(typeof titulo !=='undefined' ) { %>
+                <%= titulo %>
+            <% } else { %>
+                O título não foi enviado
+            <% } %><!--Este é o modo mais indicado.-->
+        </h1>
 
-    <h2>
-        <% numeros.forEach(num => { %>
-            <%= num %>
-        <% }) %>
-    </h2>
+        <h2>
+            <% numeros.forEach(num=> { %>
+                <%= num %>
+            <% }) %>
+        </h2>
 
-    <form action="/" method="post">
-        <label>Cliente</label>
-        <input type="text" name="cliente">
-        <button>Submit</button>
-    </form>
+        <form action="/" method="post">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            <label>Cliente</label>
+            <input type="text" name="cliente">
+            <button>Submit</button>
+        </form>
+    </body>
 
-</body>
-
-</html>
+    </html>

@@ -17,15 +17,16 @@ mongoose.connect(process.env.CONNECTIONSTRING)
 const session = require('express-session');
 // O connect-mongo é uma extensão do express-session que permite salvar as sessões no MongoDB em vez de armazená-las na memória do servidor.
 const MongoStore = require('connect-mongo');
-
+const helmet = require('helmet');
+const csrf = require('csurf');
 const routes = require('./routes.js');
 const path = require('path');
-const meuMiddleware = require('./src/middlewares/middleware.js')
+const { meuMiddlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware.js')
 
 //la permite que o Express interprete dados enviados via formulários HTML no formato URL-encoded e os transforme em um objeto JavaScript acessível via req.body.
 app.use(express.urlencoded({ extended: true }));
-
 app.use(express.static(path.resolve(__dirname, 'public')))
+app.use(helmet());
 
 const sessionOptions = session({
   secret: 'Opa este campo só eu sei...',
@@ -43,12 +44,15 @@ app.set('views', path.resolve(__dirname, 'src', 'views'));
 // View engine (motor de renderização de templates)
 app.set('view engine', 'ejs');
 
+app.use(csrf());
 // Nossos próprios middlewares
-app.use(meuMiddleware);
+app.use(meuMiddlewareGlobal);
+app.use(checkCsrfError);
+app.use(csrfMiddleware);
 app.use(routes);
 
 app.on('pronto', () => {// Captura o evento 'pronto', e inicia a função.
-    app.listen(3000, () => {
-        console.log('Acessar => http://localhost:3000');
+    app.listen(3100, () => {
+        console.log('Acessar => http://localhost:3100');
     });
 })
