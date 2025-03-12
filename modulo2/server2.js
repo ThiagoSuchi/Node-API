@@ -29,7 +29,7 @@ app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(helmet());
 
 const sessionOptions = session({
-  secret: 'Opa este campo só eu sei...',
+  secret: 'Testando...',
   store: new MongoStore({ mongoUrl: process.env.CONNECTIONSTRING }),
   resave: false,
   saveUninitialized: false,
