@@ -13,17 +13,19 @@ mongoose.connect(process.env.CONNECTIONSTRING)
   })
   .catch(err => console.error(err));
 
-// O express-session é um middleware que armazena informações da sessão do usuário no servidor em vez de armazená-las no navegador como cookies.
+// O express-session é um middleware que armazena informações da sessão do usuário no servidor enquano o cliente recebe apenas um cookie de sessão.
 const session = require('express-session');
 // O connect-mongo é uma extensão do express-session que permite salvar as sessões no MongoDB em vez de armazená-las na memória do servidor.
 const MongoStore = require('connect-mongo');
+// O Helmet é um middleware de segurança para Express.js que ajuda a proteger aplicações Node.js contra vulnerabilidades conhecidas, configurando automaticamente cabeçalhos HTTP seguros.
 const helmet = require('helmet');
+// O csurf gera um token CSRF único para cada sessão e exige que ele seja enviado junto com requisições que modificam dados (POST, PUT, DELETE). Se o token estiver ausente ou incorreto, a requisição será bloqueada.
 const csrf = require('csurf');
 const routes = require('./routes.js');
 const path = require('path');
 const { meuMiddlewareGlobal, checkCsrfError, csrfMiddleware } = require('./src/middlewares/middleware.js')
 
-//la permite que o Express interprete dados enviados via formulários HTML no formato URL-encoded e os transforme em um objeto JavaScript acessível via req.body.
+// Permite que o Express interprete dados enviados via formulários HTML no formato URL-encoded e os transforme em um objeto JavaScript acessível via req.body.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.resolve(__dirname, 'public')))
 app.use(helmet());
