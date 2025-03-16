@@ -1,29 +1,59 @@
 const Login = require('../models/LoginModel.js');
 
 exports.index = (req, res) => {
-    res.render('login');
+    if (req.session.user) return res.render('login-logado')
+    return res.render('login');
 }
 
 exports.register = async (req, res) => {
-   try{
-    const login = new Login(req.body);
-    await login.register();
+    try {
+        const login = new Login(req.body);
+        await login.register();
 
-    if(login.errors.length > 0) {
-        req.flash('errors', login.errors);
-        req.session.save(function() {
-           return res.redirect('back');// reedireciona o usuário para a página anterior
+        if (login.errors.length > 0) {
+            req.flash('errors', login.errors);
+            req.session.save(function () {
+                return res.redirect('back');// reedireciona o usuário para a página anterior
+            });
+            return;
+        }
+
+        req.flash('success', 'Usuário foi cadastrado com sucesso.');
+        req.session.save(function () {
+            return res.redirect(req.get('referrer' || '/'));// reedireciona o usuário para a página anterior
         });
-        return;
+    } catch (err) {
+        console.log(err);
+        res.render('404');
     }
 
-    req.flash('success', 'Usuário foi cadastrado com sucesso.');
-        req.session.save(function() {
-           return res.redirect(req.get('referrer' || '/'));// reedireciona o usuário para a página anterior
+};
+
+exports.login = async (req, res) => {
+    try {
+        const login = new Login(req.body);
+        await login.login();
+
+        if (login.errors.length > 0) {
+            req.flash('errors', login.errors);
+            req.session.save(function () {
+                return res.redirect('back');// reedireciona o usuário para a página anterior
+            });
+            return;
+        }
+
+        req.flash('success', 'Conectado com sucesso.');
+        req.session.user = login.user
+        req.session.save(function () {
+            return res.redirect(req.get('referrer' || '/'));// reedireciona o usuário para a página anterior
         });
-   } catch (err) {
-    console.log(err);
-    res.render('404');
-   }
-    
+    } catch (err) {
+        console.log(err);
+        res.render('404');
+    }
+};
+
+exports.logout = function(req, res) {
+    req.session.destroy();
+    res.redirect('/');
 }

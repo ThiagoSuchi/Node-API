@@ -16,6 +16,24 @@ class Login {
     this.user = null;
   }
 
+  async login() {
+    this.valida();
+    if(this.errors.length > 0) return;
+    this.user = await LoginModel.findOne({ email: this.body.email });
+
+    if(!this.user) {
+      this.errors.push('usuário não existe.');
+      return;
+    }
+
+    // Validando a senha usando o bcrypt
+    if(!bcryptjs.compareSync(this.body.password, this.user.password)) {
+      this.errors.push('Senha inválida.');
+      this.user = null;
+      return;
+    }
+  }
+
   async register() {
     this.valida();
     if(this.errors.length > 0) return;
@@ -26,17 +44,13 @@ class Login {
     const salt = bcryptjs.genSaltSync();// Gera um salt, que é um valor aleatório usado para fortalecer a criptografia.
     this.body.password = bcryptjs.hashSync(this.body.password, salt);// O salt é adicionado ao hash para codificar a senha.
 
-    try {
-      this.user = await LoginModel.create(this.body);// Criação do usuário
-    } catch (err) {
-      console.log(err);
-    }
+    this.user = await LoginModel.create(this.body);// Criação do usuário
   }
 
   // Verifica se o usuário já existe.
   async userExists() {
-    const user = await LoginModel.findOne({ email: this.body.email })
-    if(user) this.errors.push('Usuário ja existe')
+    this.user = await LoginModel.findOne({ email: this.body.email })
+    if(this.user) this.errors.push('Usuário ja existe');
   }
 
   // Valida os campos email e senha
