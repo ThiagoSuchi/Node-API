@@ -17,30 +17,31 @@ function Contato(body) {
   this.contato = null;
 };
 
-Contato.buscaPorId = async function(id) {
+Contato.buscaPorId = async function (id) {
   if (typeof id !== 'string') return;
   const user = await ContatoModel.findById(id);
   return user;
 }
 
-Contato.prototype.register = async function() {
+Contato.prototype.register = async function () {
   this.valida();
-  if(this.errors.length > 0) return;
+  if (this.errors.length > 0) return;
   this.contato = await ContatoModel.create(this.body)
 };
 
-Contato.prototype.valida = function() {
+Contato.prototype.valida = function () {
   this.cleanUp();
 
-  if(this.body.email && !validator.isEmail(this.body.email)) this.errors.push('E-mail inválido.');
-  if(!this.body.nome) this.errors.push('Nome é um campo obrigatório')
-  if(!this.body.email && !this.body.telefone) {
+  if (this.body.email && !validator.isEmail(this.body.email)) this.errors.push('E-mail inválido.');
+  if (!this.body.nome) this.errors.push('Nome é um campo obrigatório')
+  if (!this.body.email && !this.body.telefone) {
     this.errors.push('Um dos campos é necessário: email ou telefone.');
-  } 
+  }
 }
 
-Contato.prototype.cleanUp = function() { 
-  for(const key in this.body) {
+// Este método da classe Contato serve para limpar e validar os dados antes de salvar no banco de dados. 
+Contato.prototype.cleanUp = function () {
+  for (const key in this.body) {
     if (typeof this.body[key] !== 'string') {
       this.body[key] = '';
     }
@@ -53,5 +54,14 @@ Contato.prototype.cleanUp = function() {
     telefone: this.body.telefone,
   }
 }
+
+Contato.prototype.edit = async function (id) {
+  if (typeof id !== 'string') return;
+  this.valida();
+
+  if (this.errors.length > 0) return;
+  // Atualiza um contato no banco de dados e retorna o contato atualizado.
+  this.contato = await ContatoModel.findByIdAndUpdate(id, this.body, { new: true });
+};
 
 module.exports = Contato; 
