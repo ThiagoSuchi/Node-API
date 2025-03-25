@@ -47,7 +47,9 @@ export default class User extends Model {
 
     // Antes de salvar(beforeSave) um registro no banco de dados, este hook substitui a senha por uma versão criptografada.
     this.addHook('beforeSave', async user => {
-      user.password_hash = await bcrypt.hash(user.password, 8);
+      if (user.password) {
+        user.password_hash = await bcrypt.hash(user.password, 8);
+      }
     });
     // OBS: os hooks são "middlewares" de um ORM, que são nativos da lib Sequelize.
 
