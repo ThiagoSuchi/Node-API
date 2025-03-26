@@ -40,13 +40,7 @@ class HomeController {
   // Update
   async update(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['ID não enviado.'],
-        })
-      }
-
-      const user = await User.findByPk(req.params.id);// Buscando o usuário pelo Primary Key(PK)
+      const user = await User.findByPk(req.userId);// Buscando o usuário pelo Primary Key(PK)
 
       if (!user) {
         return res.status(400).json({
@@ -55,9 +49,9 @@ class HomeController {
       };
 
       const newData = await user.update(req.body);
-      res.json(newData);
+      return res.json(newData);
     } catch (err) {
-      res.status(400).json({
+      return res.status(400).json({
         errors: err.errors.map((err) => err.message)
       });
     }
@@ -67,13 +61,7 @@ class HomeController {
   // Delete
   async delete(req, res) {
     try {
-      if (!req.params.id) {
-        return res.status(400).json({
-          errors: ['ID não enviado.'],
-        })
-      }
-
-      const user = await User.findByPk(req.params.id);// Buscando o usuário pelo Primary Key(PK)
+      const user = await User.findByPk(req.userId);
 
       if (!user) {
         return res.status(400).json({
@@ -82,7 +70,7 @@ class HomeController {
       };
 
       await user.destroy()
-      res.json(`Usuário de ID: ${req.params.id} deletado com sucesso.`);
+      res.json(`Usuário de ID: ${req.userId} deletado com sucesso.`);
     } catch (err) {
       res.status(400).json({
         errors: err.errors.map((err) => err.message)
