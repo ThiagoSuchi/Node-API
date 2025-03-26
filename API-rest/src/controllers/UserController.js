@@ -17,6 +17,8 @@ class HomeController {
   async index(req, res) {
     try {
       const users = await User.findAll();
+      console.log('User ID', req.userId);
+      console.log('User Email', req.userEmail);
       res.json(users);
     } catch (e) {
       console.log(e);
