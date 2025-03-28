@@ -1,17 +1,7 @@
-import Aluno from "../models/AlunoModel.js";
-
-class UserController {
+class HomeController {
   async index(req, res) {
-    const novoAluno = await Aluno.create({
-      nome: 'George',
-      sobrenome: 'Leoncio',
-      email: 'leleONCIO@gmail.com',
-      idade: 26,
-      peso: 83,
-      altura: 1.86,
-    })
-    res.json(novoAluno);
+    res.json('Index');
   }
 }
 
-export default new UserController();
+export default new HomeController();

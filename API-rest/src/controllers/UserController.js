@@ -1,6 +1,6 @@
 import User from "../models/UserModel.js";
 
-class HomeController {
+class UserController {
   async store(req, res) {
     try {
       const novoUser = await User.create(req.body)
@@ -79,7 +79,7 @@ class HomeController {
   }
 }
 
-export default new HomeController();
+export default new UserController();
 
 /*
 
