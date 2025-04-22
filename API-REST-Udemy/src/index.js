@@ -1,26 +1,31 @@
 const express = require('express');
+const { v4: uuidv4 } = require('uuid');
+
 const app = express()
+app.use(express.json());
 
 const port = 3000
 
-app.use(express.json());
+// ------------------------------------------------
+
+const id = uuidv4()
+const projects = []
 
 app.get('/projects', (req, res) => {
-    return res.json([
-        'Projeto 1',
-        'Projeto 2'
-    ])
+  return res.json(projects)
 })
 
 app.post('/projects', (req, res) => {
-    const body = req.body
-    console.log(body);
-    
-    return res.json([
-        'Projeto 1',
-        'Projeto 2',
-        'Projeto 3'
-    ])
+    const { name, owner } = req.body
+    const project = {
+        id: uuidv4(),
+        name,
+        owner
+    };
+    projects.push(project)
+
+    // O status code para o método de criação(post), é o 201 -> created
+    return res.status(201).json(project)
 })
 
 app.put('/projects/:id', (req, res) => {
