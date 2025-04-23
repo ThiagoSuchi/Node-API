@@ -29,16 +29,28 @@ app.post('/projects', (req, res) => {
 })
 
 app.put('/projects/:id', (req, res) => {
-    const id = req.params.id
-    const body = req.body
-    console.log(`O id ${id} foi alterado`);
-    console.log(body);
+    const { id } = req.params
+    const { name, owner } = req.body
 
-    return res.json([
-        'Projeto 4',
-        'Projeto 2',
-        'Projeto 3'
-    ])
+    const projectIndex = projects.findIndex(item => item.id === id)
+
+    if (projectIndex === -1) {
+        return res.status(404).json({ error: 'Projeto não encontrado.' })
+    }
+
+    if (!name || !owner) {
+        return res.status(400).json({ error: 'Nome do projeto e proprietário são requeridos.' })
+    }
+
+    const project = {
+        id,
+        name,
+        owner
+    }
+
+    projects[projectIndex] = project
+
+    return res.json({ message: `Projeto do usuário ${owner}, atualizado com sucesso.`})
 })
 
 app.delete('/projects/:id', (req, res) => {
