@@ -18,7 +18,7 @@ app.get('/projects', (req, res) => {
 app.post('/projects', (req, res) => {
     const { name, owner } = req.body
     const project = {
-        id: uuidv4(),
+        id: id,
         name,
         owner
     };
