@@ -11,7 +11,20 @@ const port = 3000
 const id = uuidv4()
 const projects = []
 
-app.get('/projects', (req, res) => {
+// Middleware
+function logRoutes(req, res, next) {
+    const { method, url } = req
+    const route = `[${method.toUpperCase()}] ${url}`
+    
+    console.log(route);
+    return next()
+}
+
+// Para se usar um middleware
+app.use(logRoutes)
+
+// Ou um middleware pode ser usado de maneira isolada
+app.get('/projects', logRoutes, (req, res) => {
   return res.json(projects)
 })
 
