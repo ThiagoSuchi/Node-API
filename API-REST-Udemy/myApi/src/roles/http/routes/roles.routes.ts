@@ -7,9 +7,15 @@ const rolesRepository = new RolesRepository();
 
 rolesRouter.post("/", (req, res) => {
   const { name } = req.body;
-  const role = rolesRepository.create({ name })
+  const role = rolesRepository.create({ name });
 
   res.status(200).json({ role });
 });
 
-export { rolesRouter }
+rolesRouter.get("/", (req, res) => {
+  const roles = rolesRepository.findAll();
+
+  res.json(roles);
+});
+
+export { rolesRouter };
