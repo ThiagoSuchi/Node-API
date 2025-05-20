@@ -1,5 +1,5 @@
 export class Persistency {
     saveOrder() {
-        return undefined
+        console.log('Pedido salvo com sucesso...');
     }
 }
