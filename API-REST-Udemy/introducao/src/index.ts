@@ -9,7 +9,12 @@ const port = 3000
 // ------------------------------------------------
 
 const id = uuidv4()
-const projects = []
+interface Project {
+    id: string;
+    name: string;
+    owner: string;
+}
+const projects: Project[] = []
 
 // Middleware
 function logRoutes(req, res, next) {
