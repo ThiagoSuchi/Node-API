@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon ./modulo2/server2.js --ignore public --ignore frontend",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon ./modulo2/server2.js --ignore public --ignore frontend"
   },
   "keywords": [],
   "author": "",
@@ -15,7 +14,7 @@
     "bcryptjs": "^3.0.2",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^5.1.0",
-    "csurf": "^1.10.0",
+    "csurf": "^1.2.2",
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
@@ -25,14 +24,17 @@
     "validator": "^13.12.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.14",
     "@types/node": "^22.15.3",
     "@typescript-eslint/eslint-plugin": "^8.31.1",
     "@typescript-eslint/parser": "^8.31.1",
     "eslint": "^9.25.1",
     "eslint-config-prettier": "^10.1.2",
     "eslint-plugin-prettier": "^5.2.6",
+    "jest": "^29.7.0",
     "nodemon": "^3.1.9",
     "prettier": "^3.5.3",
+    "ts-jest": "^29.3.4",
     "ts-node-dev": "^2.0.0",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3"
