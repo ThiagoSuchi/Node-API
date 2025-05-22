@@ -7,7 +7,7 @@ const createSut = (name: string, price: number): Product => {
 describe('Product', () => {
     afterEach(() => jest.clearAllMocks());
 
-    it('should return undefined', () => {
+    it('should have properties name and price', () => {
         const sut = createSut('Camiseta', 59.9);
 
         // Os valores podem ser verificados tanto com toHaveProperty:
