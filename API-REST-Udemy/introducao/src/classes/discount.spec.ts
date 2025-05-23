@@ -9,6 +9,8 @@ const createSut = (className: new () => Discount): Discount => {
     return new className();
 }
 
+// O toBe é uma comparação estrita (===). Ele verifica se dois valores são exatamente iguais — mesmo tipo, mesmo valor.
+// toBeCloseTo é usado para comparar números com casas decimais, aceitando uma margem de erro (tolerância).
 describe('Product', () => {
     afterEach(() => jest.clearAllMocks());
 
