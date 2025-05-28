@@ -1,10 +1,9 @@
 //permite criar grupos de rotas em arquivos separados e, então, importar essas rotas para o arquivo principal
 import { RolesRepository } from "@roles/repositories/RolesRepository";
-import { CreateRoleController } from "@roles/useCases/createRole/CreateRoleController";
+import { createRolesController } from "@roles/useCases/createRole";
 import { Router } from "express";
 
 const rolesRouter = Router();
-const createRolesController = new CreateRoleController();
 const rolesRepository = new RolesRepository();
 
 rolesRouter.post("/", (req, res) => {
