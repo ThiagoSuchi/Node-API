@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm"
 
-// Configuração principal da fonte de dados
+// Configuração principal com o database
 export const dataSource = new DataSource({
   type: "sqlite",
   database: "./db.sqlite",
