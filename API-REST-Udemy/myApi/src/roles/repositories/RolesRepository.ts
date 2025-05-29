@@ -6,9 +6,20 @@ type CreateRoleDTO = {
 
 export class RolesRepository {
   private roles: Role[] = [];
+  private static INSTANCE: RolesRepository; // única instância da classe (compartilhada)
 
-  constructor() {
+  private constructor() {
     this.roles = []
+  }
+
+  public static getInstance(): RolesRepository {
+    if (!RolesRepository.INSTANCE) {
+      // se ainda não existe uma instância, cria
+      RolesRepository.INSTANCE = new RolesRepository();
+    };
+
+    // retorna a mesma instância sempre
+    return RolesRepository.INSTANCE;
   }
 
   create({ name }: CreateRoleDTO): Role {
