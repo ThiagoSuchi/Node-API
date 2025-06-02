@@ -1,21 +1,15 @@
-import { Role } from "@roles/entities/Role";
-import { RolesRepository } from "@roles/repositories/RolesRepository"
-import { AppError } from "@shared/errors/AppErro";
+import { Request, Response } from "express";
+import { ShowRoleUseCase } from "./ShowRoleUseCase";
 
-type ShowRoleParams = {
-  id: string
-}
+export class ShowRoleController {
 
-export class ShowRoleUseCase {
-  constructor(private rolesRepository: RolesRepository) {}
+  constructor(private showRoleUseCase: ShowRoleUseCase) {}
 
-  async execute({ id }: ShowRoleParams): Promise<Role> {
-    const role = await this.rolesRepository.findById(id);
+  async handle(req: Request, res: Response): Promise<Response> {
+    const { id } = req.params;
+    const role = await this.showRoleUseCase.execute({ id });
 
-    if (!role) {
-      throw new AppError('Role not found.', 404);
-    }
-
-    return role
+    return res.status(200).json({ role });
   }
 }
+

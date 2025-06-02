@@ -1,6 +1,6 @@
 import { RolesRepository } from "@roles/repositories/RolesRepository";
-import { ShowRoleUseCase } from "./ShowRoleController";
-import { ShowRoleController } from "./ShowRoleUseCase";
+import { ShowRoleController } from "./ShowRoleController";
+import { ShowRoleUseCase } from "./ShowRoleUseCase";
 
 const roleRepository = RolesRepository.getInstance()
 const showRolesUseCase = new ShowRoleUseCase(roleRepository);
