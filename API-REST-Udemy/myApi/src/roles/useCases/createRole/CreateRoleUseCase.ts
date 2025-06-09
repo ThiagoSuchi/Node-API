@@ -1,21 +1,21 @@
 import { Role } from "@roles/entities/Role";
-import { RolesRepository } from "@roles/repositories/RolesRepository"
+import { RolesRepository } from "@roles/repositories/RolesRepository";
 import { AppError } from "@shared/errors/AppErro";
 
 type CreateRoleDTO = {
-  name: string
-}
+  name: string;
+};
 
 export class CreateRoleUseCase {
-  constructor(private rolesRepository: RolesRepository) {}
+  constructor(private rolesRepository: RolesRepository) {};
 
   async execute({ name }: CreateRoleDTO): Promise<Role> {
     const roleAlreadyExists = await this.rolesRepository.findByName(name);
 
     if (roleAlreadyExists) {
-      throw new AppError('Role already exists.')
-    }
+      throw new AppError('Role already exists.');
+    };
 
     return this.rolesRepository.create({ name });
-  }
-}
+  };
+};

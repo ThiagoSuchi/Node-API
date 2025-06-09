@@ -1,5 +1,6 @@
 //permite criar grupos de rotas em arquivos separados e, então, importar essas rotas para o arquivo principal
 import { createRolesController } from "@roles/useCases/createRole";
+import { deleteRolesController } from "@roles/useCases/deleteRole";
 import { listRolesController } from "@roles/useCases/listRoles";
 import { showRolesController } from "@roles/useCases/showRole";
 import { updateRolesController } from "@roles/useCases/updateRole";
@@ -25,6 +26,11 @@ rolesRouter.get("/:id", async (req, res) => {
 // Atualiza a role expecífica por id
 rolesRouter.put("/:id", async (req, res) => {
   await updateRolesController.handle(req, res);
+});
+
+// Atualiza a role expecífica por id
+rolesRouter.delete("/:id", async (req, res) => {
+  await deleteRolesController.handle(req, res);
 });
 
 export { rolesRouter };
