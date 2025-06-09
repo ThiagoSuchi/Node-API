@@ -8,29 +8,11 @@ import { Router } from "express";
 
 const rolesRouter = Router();
 
-// Cria uma nova role
-rolesRouter.post("/", async (req, res) => {
-  await createRolesController.handle(req, res)
-});
-
-// Gera uma lista com todas as roles
-rolesRouter.get("/", async (req, res) => {
-  await listRolesController.handle(req, res);
-});
-
-// Lista a role expecífica por id
-rolesRouter.get("/:id", async (req, res) => {
-  await showRolesController.handle(req, res);
-});
-
-// Atualiza a role expecífica por id
-rolesRouter.put("/:id", async (req, res) => {
-  await updateRolesController.handle(req, res);
-});
-
-// Atualiza a role expecífica por id
-rolesRouter.delete("/:id", async (req, res) => {
-  await deleteRolesController.handle(req, res);
-});
+rolesRouter
+  .post("/", createRolesController.handle.bind(createRolesController)) // Cria uma nova role
+  .get("/",  listRolesController.handle.bind(listRolesController)) // Gera uma lista com todas as roles
+  .get("/:id", showRolesController.handle.bind(showRolesController)) // Lista a role expecífica por id
+  .put("/:id", updateRolesController.handle.bind(updateRolesController)) // Atualiza a role expecífica por id
+  .delete("/:id", deleteRolesController.handle.bind(deleteRolesController)) // Atualiza a role expecífica por id
 
 export { rolesRouter };
