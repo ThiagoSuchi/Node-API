@@ -2,8 +2,9 @@ import express, { NextFunction, Request, Response } from 'express';
 import { routes } from './routes';
 import swaggerUi from 'swagger-ui-express';
 import 'express-async-errors';
+import { errors } from 'celebrate';
 import cors from 'cors';
-import { AppError } from '@shared/errors/AppErro';
+import { AppError } from '@shared/utils/errors/AppErro';
 import swaggerFile from 'swagger.json';
 
 const app = express();
@@ -11,8 +12,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-app.use(routes)
-
+app.use(routes);
+app.use(errors());// Detecta erros de validação e interrompe a execução das rotas
 app.use(((((error: Error, req: Request, res: Response, next: NextFunction) => {
   if (error instanceof AppError) {
     return res.status(error.statusCode).json({

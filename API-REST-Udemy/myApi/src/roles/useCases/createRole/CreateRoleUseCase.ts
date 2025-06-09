@@ -1,6 +1,6 @@
 import { Role } from "@roles/entities/Role";
 import { RolesRepository } from "@roles/repositories/RolesRepository";
-import { AppError } from "@shared/errors/AppErro";
+import { AppError } from "@shared/utils/errors/AppErro";
 
 type CreateRoleDTO = {
   name: string;
