@@ -12,7 +12,9 @@
   "paths": {
     "/roles": {
       "post": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "summary": "Create a role",
         "description": "Create a new role",
         "requestBody": {
@@ -57,12 +59,59 @@
         }
       },
       "get": {
-        "tags": ["Role"],
+        "tags": [
+          "Role"
+        ],
         "summary": "List all roles",
         "description": "Returns all roles paginated",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Number of the page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "example": "page=1"
+            },
+            "style": "label"
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "Number of the register per page",
+            "required": false,
+            "schema": {
+              "type": "number",
+              "example": "page=15"
+            },
+            "style": "label"
+          }
+        ],
         "responses": {
           "201": {
-            "description": "Success."
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "example": {
+                  "per_page": 15,
+                  "total": 2,
+                  "current_page": 1,
+                  "data": [
+                    {
+                      "id": "4f01bb75-5180-48de-8536-ca5c071aef69",
+                      "name": "Users",
+                      "created_at": "2025-06-09T14:37:40.000Z"
+                    },
+                    {
+                      "id": "c796cdc2-25ba-4024-b8d9-eb1c3ce27a9b",
+                      "name": "Admin",
+                      "created_at": "2025-06-09T15:30:41.000Z"
+                    }
+                  ]
+                }
+              }
+            }
           }
         }
       }
