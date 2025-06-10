@@ -117,7 +117,7 @@
       }
     },
     "/roles/{id}": {
-       "put": {
+      "put": {
         "tags": [
           "Roles"
         ],
@@ -168,6 +168,64 @@
                       "type": "string"
                     }
                   }
+                },
+                "example": {
+                  "id": "c796cdc2-25ba-4024-b8d9-eb1c3ce27a9b",
+                  "name": "Administrator",
+                  "created_at": "2025-06-09T15:30:41.000Z"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request."
+          },
+          "404": {
+            "description": "Role not found."
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Roles"
+        ],
+        "summary": "Find roles by id",
+        "description": "Returns roles based on ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Identify of a role",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "style": "label"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "created_at": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "example": {
+                  "id": "c796cdc2-25ba-4024-b8d9-eb1c3ce27a9b",
+                  "name": "Administrator",
+                  "created_at": "2025-06-09T15:30:41.000Z"
                 }
               }
             }
