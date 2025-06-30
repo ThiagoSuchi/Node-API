@@ -1,5 +1,4 @@
 import { IRolesRepository, RolesPaginateProperties } from "@roles/repositories/IRolesRepository";
-import { RolesRepository } from "@roles/repositories/RolesRepository";
 import { inject, injectable } from "tsyringe";
 
 type ListRolesUseCaseParams = {

@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { ShowRoleUseCase } from "./ShowRoleUseCase";
 import { container } from "tsyringe";
-import { RolesRepository } from "@roles/repositories/RolesRepository";
 
 export class ShowRoleController {
   async handle(req: Request, res: Response): Promise<Response> {
