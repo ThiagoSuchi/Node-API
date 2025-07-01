@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 import { CreateUserUseCase } from "./CreateUserUseCase";
 
 export class CreateUserController {
-  async handle(req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<void> {
     const createUserUseCase = container.resolve(CreateUserUseCase);
     const { name, email, isAdmin, password, roleId } = req.body;
 
@@ -16,6 +16,6 @@ export class CreateUserController {
       roleId
     });
 
-    return res.status(201).json(user);
+    res.status(201).json(user);
   }
 }
