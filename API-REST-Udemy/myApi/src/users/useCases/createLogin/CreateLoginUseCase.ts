@@ -27,19 +27,18 @@ export class CreateLoginUseCase {
     const user = await this.usersRepository.findByEmail(email)
 
     if (!user) {
-      throw new AppError('Incorrect email/password conbination.', 401);
+      throw new AppError('Incorrect email/password combination', 401);
     }
 
     const passwordConfirmed = await compare(password, user.password);
 
     if (!passwordConfirmed) {
-      throw new AppError('Incorrect email/password conbination.', 401);
+      throw new AppError('Incorrect email/password combination', 401);
     }
 
     const token = sign(
-      { subject: user.id },
-      jwtConfig.jwt.secret,
-      { expiresIn: '1d' }
+      { sub: user.id },
+      jwtConfig.jwt.secret as string
     );
 
     return {

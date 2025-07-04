@@ -3,10 +3,12 @@ import { celebrate, Joi, Segments } from "celebrate";
 import { container } from "tsyringe";
 import { CreateUserController } from "@users/useCases/createUser/CreateUserController";
 import { ListUsresController } from "@users/useCases/listUsers/ListUsersController";
+import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginController";
 
 const usersRouter = Router();
 const createUserController = container.resolve(CreateUserController);
 const listUsersController = container.resolve(ListUsresController);
+const createLoginController = container.resolve(CreateLoginController);
 
 usersRouter.post(
   '/',
@@ -18,9 +20,10 @@ usersRouter.post(
       isAdmin: Joi.boolean().required(),
       roleId: Joi.string().uuid().required(),
     }
-  }), (req, res) => {
-    return createUserController.handle(req, res);
-  })
+  }), async (req, res) => {
+    await createUserController.handle(req, res);
+  }
+)
 
 usersRouter.get(
   '/',
@@ -29,8 +32,21 @@ usersRouter.get(
       page: Joi.number(),
       limit: Joi.number()
     }
-  }), (req, res) => {
-    return listUsersController.handle(req, res);
-  })
+  }, { convert: true }), async (req, res) => {
+    await listUsersController.handle(req, res);
+  }
+)
+
+usersRouter.post(
+  '/login',
+  celebrate({
+    [Segments.BODY]: {
+      email: Joi.string().email().required(),
+      password: Joi.string().required(),
+    }
+  }), async (req, res) => {
+    await createLoginController.handle(req, res);
+  }
+)
 
 export { usersRouter };
