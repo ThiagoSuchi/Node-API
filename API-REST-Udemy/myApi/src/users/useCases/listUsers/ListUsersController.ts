@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 import { ListUsersUseCase } from "./ListUserUseCas";
 
 export class ListUsresController {
-  async handle(req: Request, res: Response): Promise<Response> {
+  async handle(req: Request, res: Response): Promise<void> {
     const listUserUseCase = container.resolve(ListUsersUseCase)
 
     const page = req.query.page && Number(req.query.page) > 0
@@ -16,6 +16,6 @@ export class ListUsresController {
       : 15
 
     const users = await listUserUseCase.execute({ page, limit });
-    return res.json(users)
+    res.json(users)
   }
 }
