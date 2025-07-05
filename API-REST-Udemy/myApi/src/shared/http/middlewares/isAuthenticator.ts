@@ -3,6 +3,10 @@ import { NextFunction, Request, Response } from "express";
 import { Secret, verify } from "jsonwebtoken";
 import authConfig from '@config/auth';
 
+type JwtPayLoadProps = {
+  sub: string
+}
+
 export const isAuthenticated = (
   req: Request,
   res: Response,
@@ -15,8 +19,10 @@ export const isAuthenticated = (
 
   const token = authHeader.replace('Bearer ', '');
   try {
-    verify(token, authConfig.jwt.secret as Secret);
-    return next()
+    const decodedToken = verify(token, authConfig.jwt.secret as Secret);
+    const { sub } = decodedToken as JwtPayLoadProps;
+    req.user = { id: sub };
+    return next();
   } catch (err) {
     throw new AppError('Invalid authentication token', 401);
   }
