@@ -1,17 +1,21 @@
 import express, { NextFunction, Request, Response } from 'express';
-import { routes } from './routes';
 import swaggerUi from 'swagger-ui-express';
-import 'express-async-errors';
-import { errors } from 'celebrate';
-import cors from 'cors';
-import { AppError } from '@shared/utils/errors/AppErro';
 import swaggerFile from 'swagger.json';
+import { errors } from 'celebrate';
+import 'express-async-errors';
+import cors from 'cors';
+import path from 'path';
+
+import { AppError } from '@shared/utils/errors/AppErro';
+import uploadConfig from "@config/upload";
+import { routes } from './routes';
 import '@shared/container';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use('/files', express.static(uploadConfig.directory));// Rota stática
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
 app.use(routes);
 app.use(errors());// Detecta erros de validação e interrompe a execução das rotas
