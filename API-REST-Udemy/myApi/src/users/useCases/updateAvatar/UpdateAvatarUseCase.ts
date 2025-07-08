@@ -25,18 +25,21 @@ export class UpdateAvatarUseCase {
       throw new AppError('Only authenticated users can change avatar.', 401);
     }
 
-    // Verificação da existência de um avatar
+    // Verificação da existência de um avatar anterior para removê-lo
     if (user.avatar) {
-      // após verificar a existência do avatar, ele será apagado
-      const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath)
+      try {
+        // após verificar a existência do avatar, ele será apagado
+        const userAvatarFilePath = path.join(uploadConfig.directory, user.avatar);
+        await fs.promises.stat(userAvatarFilePath); // Verifica se existe
+        await fs.promises.unlink(userAvatarFilePath); // Remove o arquivo
+      } catch (error) {
+        // Se o arquivo não existir, apenas continua (não é um erro crítico)
+        console.log('Avatar anterior não encontrado, continuando...');
       }
-
-      // salva o novo avatar
-      user.avatar = avatarFileName
-      return this.usersRepository.save(user);
     }
+
+    // salva o novo avatar
+    user.avatar = avatarFileName;
+    return this.usersRepository.save(user);
   }
 }
