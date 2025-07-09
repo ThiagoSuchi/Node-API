@@ -1,24 +1,26 @@
+import { instanceToInstance } from "class-transformer";
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { CreateUserUseCase } from "./UpdateProfileUseCase";
-import { instanceToInstance } from "class-transformer";
+
+import { UpdateProfileUseCase } from "./UpdateProfileUseCase";
 import { AppError } from "@shared/utils/errors/AppErro";
 
-export class CreateUserController {
+export class UpdateProfileController {
   async handle(req: Request, res: Response): Promise<void> {
     try {
-      const createUserUseCase = container.resolve(CreateUserUseCase);
-      const { name, email, isAdmin, password, roleId } = req.body;
+      const updateProfileUseCase = container.resolve(UpdateProfileUseCase);
+      const userId = req.user.id;
+      const { name, email, password, old_password } = req.body;
 
-      const user = await createUserUseCase.execute({
+      const user = await updateProfileUseCase.execute({
+        userId,
         name,
         email,
         password,
-        isAdmin,
-        roleId
+        old_password
       });
 
-      res.status(201).json(instanceToInstance(user));
+      res.json(instanceToInstance(user));
     } catch (error) {
       console.error('Create user error:', error);
 
