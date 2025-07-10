@@ -1,10 +1,9 @@
 import express, { NextFunction, Request, Response } from 'express';
 import swaggerUi from 'swagger-ui-express';
-import swaggerFile from 'swagger.json';
+import swaggerFile from '../../swagger.json';
 import { errors } from 'celebrate';
 import 'express-async-errors';
 import cors from 'cors';
-import path from 'path';
 
 import { AppError } from '@shared/utils/errors/AppErro';
 import uploadConfig from "@config/upload";
