@@ -1,4 +1,6 @@
+import { IRefreshTokenRepository } from "@users/repositories/IRefreshTokenRepository";
 import { IUserRepository } from "@users/repositories/IUserRepository";
+import { RefreshTokenRepository } from "@users/repositories/RefreshTokenRepository";
 import { UserRepository } from "@users/repositories/UserRepository";
 import { CreateLoginController } from "@users/useCases/createLogin/CreateLoginController";
 import { CreateUserController } from "@users/useCases/createUser/CreateUserController";
@@ -12,6 +14,11 @@ import { container } from "tsyringe";
 container.registerSingleton<IUserRepository>(
   'UserRepository',
   UserRepository
+);
+
+container.registerSingleton<IRefreshTokenRepository>(
+  'RefreshTokenRepository',
+  RefreshTokenRepository
 );
 
 container.registerSingleton('CreateUserController', CreateUserController);
