@@ -1,0 +1,5 @@
+{
+  "sqlite.sqlite3": "/usr/bin/sqlite3",
+  "sqlite.showBinaryData": true,
+  "sqlite.logLevel": "INFO"
+}

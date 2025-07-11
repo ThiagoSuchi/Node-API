@@ -4,6 +4,7 @@ import { Role } from "@roles/entities/Role"
 import { CreateUsersTable1750281006168 } from "./migrations/1750281006168-CreateUsersTable"
 import { AddRoleIdToUsersTable1750775931508 } from "./migrations/1750775931508-AddRoleIdToUsersTable"
 import { User } from "@users/entities/User"
+import { CreateRefreshTokenTable1752256235194 } from "./migrations/1752256235194-CreateRefreshTokenTable"
 
 // Configuração principal com o database
 export const dataSource = new DataSource({
@@ -13,6 +14,7 @@ export const dataSource = new DataSource({
   migrations: [
     CreateRolesTable1748552621145,
     CreateUsersTable1750281006168,
-    AddRoleIdToUsersTable1750775931508
+    AddRoleIdToUsersTable1750775931508,
+    CreateRefreshTokenTable1752256235194
   ],
 })
