@@ -11,16 +11,7 @@ export const addUserInfoToReq = (
     next: NextFunction
 ) => {
     const authHeader = req.headers.authorization;
-
-    if (!authHeader) {
-        throw new Error('Access token not present');
-    }
-
     const token = authHeader.replace('Bearer ', '');
-
-    if (!token) {
-        throw new Error('Access token not present');
-    }
 
     try {
         const decodedToken = decode(token);

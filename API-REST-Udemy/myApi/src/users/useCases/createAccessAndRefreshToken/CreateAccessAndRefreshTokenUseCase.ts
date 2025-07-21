@@ -8,7 +8,6 @@ import { IUserRepository } from "@users/repositories/IUserRepository";
 import jwtConfig from '@config/auth';
 
 type CreateAccessAndRefreshTokenDTO = {
-    user_id: string
     refresh_token: string
 }
 
@@ -27,15 +26,8 @@ export class CreateAccessAndRefreshTokenUseCase {
     ) { }
 
     public async execute({
-        user_id,
         refresh_token
     }: CreateAccessAndRefreshTokenDTO): Promise<IResponse> {
-        const user = await this.usersRepository.findById(user_id);
-
-        if (!user) {
-            throw new AppError('User not found.', 404)
-        }
-
         const refreshTokenExist = await this.refreshTokenRepository.findByToken(refresh_token)
 
         if (!refreshTokenExist) {
@@ -50,6 +42,12 @@ export class CreateAccessAndRefreshTokenUseCase {
             dateNow
         ) {
             throw new AppError('refresh token is invalid/expired.', 401)
+        }
+
+        const user = await this.usersRepository.findById(refreshTokenExist.user_id);
+
+        if (!user) {
+            throw new AppError('User not found.', 404)
         }
 
         await this.refreshTokenRepository.invalidate(refreshTokenExist)
