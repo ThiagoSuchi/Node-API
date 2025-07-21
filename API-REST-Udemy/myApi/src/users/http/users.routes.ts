@@ -11,6 +11,8 @@ import uploadConfig from "@config/upload";
 import { UpdateAvatarController } from "@users/useCases/updateAvatar/UpdateAvatarController";
 import { ShowProfileController } from "@users/useCases/showProfile/ShowProfileController";
 import { UpdateProfileController } from "@users/useCases/updateProfile/UpdateProfileController";
+import { CreateAccessAndRefreshTokenController } from "@users/useCases/createAccessAndRefreshToken/CreateAccessAndRefreshTokenController";
+import { addUserInfoToReq } from "./middlewares/addUserInfoToReq";
 
 const usersRouter = Router();
 const createUserController = container.resolve(CreateUserController);
@@ -19,6 +21,7 @@ const createLoginController = container.resolve(CreateLoginController);
 const updateAvatarController = container.resolve(UpdateAvatarController);
 const showProfilecontroller = container.resolve(ShowProfileController);
 const updateProfileController = container.resolve(UpdateProfileController);
+const createAccessAndRefreshTokenController = container.resolve(CreateAccessAndRefreshTokenController);
 
 const upload = multer(uploadConfig);
 
@@ -55,6 +58,15 @@ usersRouter
       }
     }), createLoginController.handle.bind(createLoginController)
   )
+  .post(
+    '/refresh_token',
+    addUserInfoToReq,
+    celebrate({
+      [Segments.BODY]: {
+        refresh_token: Joi.string().required()
+      }
+    }), createAccessAndRefreshTokenController.handle.bind(createAccessAndRefreshTokenController)
+  )
   .patch(
     '/avatar',
     isAuthenticated,
@@ -82,7 +94,7 @@ usersRouter
             then: Joi.required()// então é obrigatório
           })
       }
-    }), updateProfileController.handle.bind(createLoginController)
+    }), updateProfileController.handle.bind(updateProfileController)
   )
 
 export { usersRouter };

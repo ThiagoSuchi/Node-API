@@ -13,21 +13,13 @@ export const addUserInfoToReq = (
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
-        return res.status(401).json({
-            error: true,
-            code: 'token.invalid',
-            message: 'Access token not present',
-        })
+        throw new Error('Access token not present');
     }
 
     const token = authHeader.replace('Bearer ', '');
 
     if (!token) {
-        return res.status(401).json({
-            error: true,
-            code: 'token.invalid',
-            message: 'Access token not present',
-        })
+        throw new Error('Access token not present');
     }
 
     try {
@@ -36,10 +28,6 @@ export const addUserInfoToReq = (
         req.user = { id: sub };
         return next();
     } catch (err) {
-        return res.status(401).json({
-            error: true,
-            code: 'token.invalid',
-            message: 'Access token not present',
-        })
+        throw new Error('Access token not present');
     }
 }
